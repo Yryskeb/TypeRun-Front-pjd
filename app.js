@@ -77,78 +77,98 @@ mainInput.addEventListener("keydown", async (e) => {
 
     // let separatedContent = content.split(/[.?]/);
 
-    async function mainFunction(cont) {
+    async function mainFunction() {
+      let separatedContent = content.split(/[.?]/);
 
-      for (let letterPlay of cont) {
+      for (let cont of separatedContent) {
+        if (cont.length <= inputLength) {
+          cont = cont.trim();
+          for (let letterPlay of cont) {
+            await delay(50);
 
-        await delay(50);
+            newLetter = document.createElement("p");
+            newLetter.classList.add("main-text");
 
-        newLetter = document.createElement("p");
-        newLetter.classList.add("main-text");
+            newLetter.innerText = letterPlay;
+            let addClass = `main-text${i}`;
+            newLetter.classList.add(addClass);
+            mainTextPart.appendChild(newLetter);
 
-        newLetter.innerText = letterPlay;
-        let addClass = `main-text${i}`;
-        newLetter.classList.add(addClass);
-        mainTextPart.appendChild(newLetter);
+            if (letterPlay === " ") {
+              console.log(newLetter.innerText);
+              newLetter.style.padding = "2px";
+            }
 
-        if (letterPlay === " ") {
-          console.log(newLetter.innerText);
-          newLetter.style.padding = "2px";
-        }
+            gsap.to(`.${addClass}`, {
+              ease: "easeOutIn",
+              duration: 1,
+              repeat: 0,
+              paddingTop: 400,
+              paddingBottom: 0,
+            });
 
-        gsap.to(`.${addClass}`, {
-          ease: "easeOutIn",
-          duration: 1,
-          repeat: 0,
-          paddingTop: 400,
-          paddingBottom: 0,
-        });
+            // console.log(cont.length, i);
+            i++;
 
-        // console.log(cont.length, i);
-        i++;
-
-        if (i >= cont.length) {
-          await delay(1000);
-          mainTextPart.innerHTML = "";
-          i = 0;
-        }
-      }
-
-    }
-
-    // function delay(ms) {
-    //   return new Promise((resolve) => setTimeout(resolve, ms));
-    // }
-
-    let separatedContent = content.split(/[.?]/);
-
-    for (let cont of separatedContent) {
-      if (cont.length <= inputLength) {
-        mainFunction(cont);
-        console.log(cont);
-      } else if (cont.length > inputLength) {
-        let spaceLess = cont.split(" ");
-        let countCont = spaceLess.length;
-        let cont1 = spaceLess.slice(0, countCont / 2).join(" ");
-        let cont2 = spaceLess.slice(countCont / 2).join(" ");
-        cont = [cont1, cont2];
-        // console.log(cont);
-        mainFunction(cont)
-      } else {
-        cont.forEach((element) => {
-          if (element.length > inputLength) {
-            let spaceLess = element.split(" ");
-            let countCont = spaceLess.length;
-            let cont1 = spaceLess.slice(0, countCont / 2).join(" ");
-            let cont2 = spaceLess.slice(countCont / 2).join(" ");
-            cont = [cont1, cont2];
-            mainFunction(cont);
+            if (i >= cont.length) {
+              await delay(1000);
+              mainTextPart.innerHTML = "";
+              i = 0;
+            }
           }
-        });
+        } else if (cont.length > inputLength) {
+          let spaceLess = cont.split(" ");
+          let countCont = spaceLess.length;
+          let cont1 = spaceLess.slice(0, countCont / 2).join(" ");
+          let cont2 = spaceLess.slice(countCont / 2).join(" ");
+          let cont3 = [cont1, cont2];
+
+          for (let cont of cont3) {
+            cont = cont.trim();
+            if (cont.length <= inputLength) {
+              for (let letterPlay of cont) {
+                await delay(50);
+
+                newLetter = document.createElement("p");
+                newLetter.classList.add("main-text");
+
+                newLetter.innerText = letterPlay;
+                let addClass = `main-text${i}`;
+                newLetter.classList.add(addClass);
+                mainTextPart.appendChild(newLetter);
+
+                if (letterPlay === " ") {
+                  console.log(newLetter.innerText);
+                  newLetter.style.padding = "2px";
+                }
+
+                gsap.to(`.${addClass}`, {
+                  ease: "easeOutIn",
+                  duration: 1,
+                  repeat: 0,
+                  paddingTop: 400,
+                  paddingBottom: 0,
+                });
+
+                // console.log(cont.length, i);
+                i++;
+
+                if (i >= cont.length) {
+                  await delay(1000);
+                  mainTextPart.innerHTML = "";
+                  i = 0;
+                }
+              }
+            }
+          }
+        } 
       }
     }
+
     function delay(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
+
+    mainFunction();
   }
 });
