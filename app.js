@@ -67,13 +67,14 @@ const content = `This night is cold in the kingdom.
 
 let i = 0;
 let index = 0;
-let space = "";
 let newLetter = 0;
 let switchCicle = 1;
+let testPosition = "";
 
 mainInput.addEventListener("keydown", async (e) => {
   if ("Enter" === e.key) {
     mainInput.value = "";
+    // mainInput.placeholder = "";
 
     // let separatedContent = content.split(/[.?]/);
 
@@ -84,7 +85,7 @@ mainInput.addEventListener("keydown", async (e) => {
         if (cont.length <= inputLength) {
           cont = cont.trim();
           for (let letterPlay of cont) {
-            await delay(50);
+            await delay(100);
 
             newLetter = document.createElement("p");
             newLetter.classList.add("main-text");
@@ -95,15 +96,18 @@ mainInput.addEventListener("keydown", async (e) => {
             mainTextPart.appendChild(newLetter);
 
             if (letterPlay === " ") {
-              console.log(newLetter.innerText);
-              newLetter.style.padding = "2px";
+              newLetter.style.padding = "3.9px"
+
             }
+
+            testPosition = testPosition + letterPlay;
+            mainInput.placeholder = testPosition;
 
             gsap.to(`.${addClass}`, {
               ease: "easeOutIn",
-              duration: 1,
+              duration: 2,
               repeat: 0,
-              paddingTop: 400,
+              paddingTop: 406,
               paddingBottom: 0,
             });
 
@@ -111,8 +115,10 @@ mainInput.addEventListener("keydown", async (e) => {
             i++;
 
             if (i >= cont.length) {
-              await delay(1000);
+              await delay(2000);
               mainTextPart.innerHTML = "";
+              // mainInput.value = ``;
+              testPosition = "";
               i = 0;
             }
           }
@@ -127,7 +133,7 @@ mainInput.addEventListener("keydown", async (e) => {
             cont = cont.trim();
             if (cont.length <= inputLength) {
               for (let letterPlay of cont) {
-                await delay(50);
+                await delay(100);
 
                 newLetter = document.createElement("p");
                 newLetter.classList.add("main-text");
@@ -138,15 +144,17 @@ mainInput.addEventListener("keydown", async (e) => {
                 mainTextPart.appendChild(newLetter);
 
                 if (letterPlay === " ") {
-                  console.log(newLetter.innerText);
-                  newLetter.style.padding = "2px";
+                  newLetter.style.padding = "3.9px";
                 }
+
+                testPosition = testPosition + letterPlay;
+                mainInput.placeholder = testPosition;
 
                 gsap.to(`.${addClass}`, {
                   ease: "easeOutIn",
-                  duration: 1,
+                  duration: 2,
                   repeat: 0,
-                  paddingTop: 400,
+                  paddingTop: 406,
                   paddingBottom: 0,
                 });
 
@@ -154,14 +162,16 @@ mainInput.addEventListener("keydown", async (e) => {
                 i++;
 
                 if (i >= cont.length) {
-                  await delay(1000);
+                  await delay(2000);
                   mainTextPart.innerHTML = "";
+                  // mainInput.value = "";
+                  testPosition = "";
                   i = 0;
                 }
               }
             }
           }
-        } 
+        }
       }
     }
 
