@@ -2,20 +2,13 @@ const mainInput = document.querySelector(".main-input");
 const inputWidth = mainInput.offsetWidth;
 const fontSize = parseInt(window.getComputedStyle(mainInput).fontSize);
 
-const inputLength = Math.floor(inputWidth / (fontSize * 0.6)); // Adjust 0.6 based on font and padding
+const inputLength = Math.floor(inputWidth / (fontSize * 0.6));
 
 console.log(inputLength);
 
 let text = document.querySelector(".main-text");
 let mainTextPart = document.querySelector(".main-text-part");
-
-// create Element
-
-// let arr = [1, 2, 3, 4, 5];
-
-// arr.forEach(function(element) {
-//   console.log(element);
-// });
+let backInput = document.querySelector(".back-input");
 
 const content = `This night is cold in the kingdom.
   I can feel you fade away.
@@ -68,15 +61,19 @@ const content = `This night is cold in the kingdom.
 let i = 0;
 let index = 0;
 let newLetter = 0;
-let switchCicle = 1;
-let testPosition = "";
+let gameStart = 0;
+let backInputText = "";
 
-mainInput.addEventListener("keydown", async (e) => {
-  if ("Enter" === e.key) {
+window.addEventListener("keydown", async (enter) => {
+  if ("Enter" === enter.key) {
+    gameStart++;
+  }
+
+  if (gameStart === 1) {
+    mainInput.focus();
+    // window.location.reload();
+
     mainInput.value = "";
-    // mainInput.placeholder = "";
-
-    // let separatedContent = content.split(/[.?]/);
 
     async function mainFunction() {
       let separatedContent = content.split(/[.?]/);
@@ -96,12 +93,12 @@ mainInput.addEventListener("keydown", async (e) => {
             mainTextPart.appendChild(newLetter);
 
             if (letterPlay === " ") {
-              newLetter.style.padding = "3.9px"
-
+              newLetter.style.padding = "3.9px";
             }
 
-            testPosition = testPosition + letterPlay;
-            mainInput.placeholder = testPosition;
+            backInputText = backInputText + letterPlay;
+            backInput.style.textAlign = "start";
+            backInput.innerText = backInputText;
 
             gsap.to(`.${addClass}`, {
               ease: "easeOutIn",
@@ -111,14 +108,13 @@ mainInput.addEventListener("keydown", async (e) => {
               paddingBottom: 0,
             });
 
-            // console.log(cont.length, i);
             i++;
 
             if (i >= cont.length) {
               await delay(2000);
               mainTextPart.innerHTML = "";
-              // mainInput.value = ``;
-              testPosition = "";
+              mainInput.value = ``;
+              backInputText = "";
               i = 0;
             }
           }
@@ -147,8 +143,9 @@ mainInput.addEventListener("keydown", async (e) => {
                   newLetter.style.padding = "3.9px";
                 }
 
-                testPosition = testPosition + letterPlay;
-                mainInput.placeholder = testPosition;
+                backInputText = backInputText + letterPlay;
+                backInput.style.textAlign = "start";
+                backInput.innerText = backInputText;
 
                 gsap.to(`.${addClass}`, {
                   ease: "easeOutIn",
@@ -164,8 +161,8 @@ mainInput.addEventListener("keydown", async (e) => {
                 if (i >= cont.length) {
                   await delay(2000);
                   mainTextPart.innerHTML = "";
-                  // mainInput.value = "";
-                  testPosition = "";
+                  mainInput.value = "";
+                  backInputText = "";
                   i = 0;
                 }
               }
@@ -173,6 +170,10 @@ mainInput.addEventListener("keydown", async (e) => {
           }
         }
       }
+
+      gameStart = 0;
+      backInput.innerText = "ENTER TO START!";
+      backInput.style.textAlign = "center";
     }
 
     function delay(ms) {
@@ -181,4 +182,6 @@ mainInput.addEventListener("keydown", async (e) => {
 
     mainFunction();
   }
+
+  console.log(enter.key);
 });
