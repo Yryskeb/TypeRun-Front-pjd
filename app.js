@@ -4,11 +4,18 @@ const fontSize = parseInt(window.getComputedStyle(mainInput).fontSize);
 
 const inputLength = Math.floor(inputWidth / (fontSize * 0.6));
 
-console.log(inputLength);
+let bitsPart = document.querySelector(".play-bits");
+
+// console.log(inputLength);
 
 let text = document.querySelector(".main-text");
 let mainTextPart = document.querySelector(".main-text-part");
 let backInput = document.querySelector(".back-input");
+
+// music
+const audio = document.getElementById("audio");
+const bars = document.querySelectorAll(".bar");
+const startButton = document.getElementById("startButton");
 
 const content = `This night is cold in the kingdom.
   I can feel you fade away.
@@ -73,8 +80,6 @@ window.addEventListener("keydown", async (enter) => {
     mainInput.focus();
     // window.location.reload();
 
-    mainInput.value = "";
-
     async function mainFunction() {
       let separatedContent = content.split(/[.?]/);
 
@@ -82,7 +87,7 @@ window.addEventListener("keydown", async (enter) => {
         if (cont.length <= inputLength) {
           cont = cont.trim();
           for (let letterPlay of cont) {
-            await delay(100);
+            await delay(40);
 
             newLetter = document.createElement("p");
             newLetter.classList.add("main-text");
@@ -99,6 +104,7 @@ window.addEventListener("keydown", async (enter) => {
             backInputText = backInputText + letterPlay;
             backInput.style.textAlign = "start";
             backInput.innerText = backInputText;
+            mainInput.value = backInputText;
 
             gsap.to(`.${addClass}`, {
               ease: "easeOutIn",
@@ -129,7 +135,7 @@ window.addEventListener("keydown", async (enter) => {
             cont = cont.trim();
             if (cont.length <= inputLength) {
               for (let letterPlay of cont) {
-                await delay(100);
+                await delay(40);
 
                 newLetter = document.createElement("p");
                 newLetter.classList.add("main-text");
@@ -146,6 +152,7 @@ window.addEventListener("keydown", async (enter) => {
                 backInputText = backInputText + letterPlay;
                 backInput.style.textAlign = "start";
                 backInput.innerText = backInputText;
+                mainInput.value = backInputText;
 
                 gsap.to(`.${addClass}`, {
                   ease: "easeOutIn",
@@ -181,6 +188,35 @@ window.addEventListener("keydown", async (enter) => {
     }
 
     mainFunction();
+
+    audio
+      .play()
+      .then(() => {
+        const audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)();
+        const source = audioContext.createMediaElementSource(audio);
+        const analyser = audioContext.createAnalyser();
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        function updateBars() {
+          requestAnimationFrame(updateBars);
+          analyser.getByteFrequencyData(dataArray);
+          bars.forEach((bar, index) => {
+            const frequency = dataArray[index];
+            const barProcent = (frequency / 255) * 100;
+            const barHeight = 100 - Math.round(barProcent) + "%";
+            bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 20%, yellow 30%, rgb(3, 255, 3) 80%)`;
+            // bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 10%, rgb(213, 19, 252) 20%, rgb(255, 47, 168) 30%, rgb(3, 104, 255) 80%)`;
+          });
+        }
+
+        updateBars();
+      })
+      // .catch((error) => console.error("Error playing audio:", error));
   }
 
   console.log(enter.key);
