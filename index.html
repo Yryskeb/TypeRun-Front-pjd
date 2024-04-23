@@ -1,97 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anta&display=swap"
-      rel="stylesheet"
-    />
 
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css" />
-    <style></style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet" />
 
-  <body>
-    <section class="sidebur-left"></section>
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style></style>
+</head>
 
-    <section class="sidebar-right"></section>
+<body>
+  <section class="sidebar-left hide-left">
+    <button class="left-slide-button"><span>PIECE of STAR</span><img class="left-slide-img"
+        src="icons/right_arrow_icon.png" alt="slide"></button>
+    <ul class="left-ul">
+      <li class="left-li rating"><a class="rating-a" id="left-a" href="#">Rating</a></li>
+      <li class="left-li stat"><a class="stat-a" id="left-a" href="#">Stat</a></li>
+      <li class="left-li advice"><a class="advice-a" id="left-a" href="#">Advice</a></li>
+      <li class="left-li support"><a class="support-a" id="left-a" href="#">Support</a></li>
+      <li class="left-li contact"><a class="contact-a" id="left-a" href="#">Contact</a></li>
+      <li class="left-li hunter"><a class="hunter-a" id="left-a" href="#">Hunter</a></li>
+    </ul>
+    <div class="left-add-part">for add</div>
+  </section>
 
-    <div class="main-part-input">
-      <div class="main-text-part">
-      </div>
+  <section class="sidebur-right hide-right">
+    <button class="right-slide-button"><img class="right-slide-img" src="icons/right_settings_icon.png"
+        alt="slide"><span>PLAY LIST</span></button>
 
-      <section class="section-main-input">
-        <div class="back-input">ENTER TO START!</div>
+    <ul class="right-ul">
+      <button class="add-new-song"><input class="input-new-song" type="file"><img class="arrow-up-icon" src="icons/folder_arrow_up_icon.png" alt="folder"></button>
+      <li class="right-li">
+        <audio class="right-audio" controls>
+          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </li>
+      <li class="right-li">
+        <audio class="right-audio" controls>
+          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </li>
+      <li class="right-li">
+        <audio class="right-audio" controls>
+          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </li>
+      <li class="right-li">
+        <audio class="right-audio" controls>
+          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </li>
+      <li class="right-li">
+        <audio class="right-audio" controls>
+          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </li>
 
-        <input
-          type="text"
-          class="main-input"
-          name="main-input"
-          autocomplete="off"
-          spellcheck="false"
-        />
+    </ul>
+    <div class="right-add-part">for add</div>
+  </section>
 
-      </section>
+  <div class="main-part-input">
+    <div class="main-text-part"></div>
 
-      <button class="start-button">START</button>
+    <section class="section-main-input">
+      <div class="back-input">ENTER TO START!</div>
 
+      <input type="text" class="main-input" name="main-input" autocomplete="off" spellcheck="false" />
+    </section>
+
+    <button class="start-button">START</button>
+  </div>
+
+
+
+  <div class="part-result">
+    <div class="play-bits">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
     </div>
+    <div class="bottom-bar"></div>
+  </div>
 
-    <audio id="audio" src="/audio/Let_Me_Down.mp3" preload="auto"></audio>
-    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+  <script src="app.js"></script>
+  <script src="test.js"></script>
+</body>
 
-    <div class="part-result">
-      <div class="play-bits">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
-      <div class="bottom-bar"></div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
-    <script src="app.js"></script>
-    <script src="test.js"></script>
-  </body>
 </html>

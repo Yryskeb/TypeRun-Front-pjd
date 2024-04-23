@@ -4,11 +4,7 @@ const fontSize = parseInt(window.getComputedStyle(mainInput).fontSize);
 
 const inputLength = Math.floor(inputWidth / (fontSize * 0.6));
 
-
 let bitsPart = document.querySelector(".play-bits");
-
-console.log(inputLength);
-
 
 let mainTextPart = document.querySelector(".main-text-part");
 let backInput = document.querySelector(".back-input");
@@ -18,15 +14,13 @@ const audio = document.getElementById("audio");
 const bars = document.querySelectorAll(".bar");
 const startButton = document.querySelector(".start-button");
 
-
-
 let i = 0;
 let index = 0;
 let newLetter = 0;
 let gameStart = 0;
 let timeOut = 0;
 
-startButton.addEventListener("click", async (enter) => {
+startButton.addEventListener("click", async () => {
 
 
 
@@ -106,19 +100,20 @@ startButton.addEventListener("click", async (enter) => {
             );
 
             await delay(timeLetter / 4);
-            newLetter = document.createElement("p");
-            newLetter.classList.add("main-text");
+            newLetter = document.createElement("span");
             let addClass = `main-text${li}`;
-            newLetter.classList.add(addClass);
+            newLetter.classList.add("main-text", addClass);
+            // newLetter.innerText = animeLetter
+            // mainTextPart.appendChild(newLetter)
 
-            // backInputText = backInputText + animeLetter;
+
+
             backInput.style.textAlign = "start";
-            // backInput.innerText = backInputText;
-            // mainInput.value = backInputText;
             let splitLetter = document.createElement("span")
             splitLetter.classList.add(`back-letter${i}`, "back-letters")
             splitLetter.innerText = animeLetter;
             backInput.appendChild(splitLetter)
+
 
             // '&nbsp;'
             if (animeLetter === ' ') {
@@ -232,3 +227,33 @@ startButton.addEventListener("click", async (enter) => {
 
 
 });
+
+
+// sidebare
+
+const scrollButtonLeft = document.querySelector(".left-slide-button");
+let sidebarLeft = document.querySelector(".sidebar-left");
+let slideImgLeft = document.querySelector(".left-slide-img")
+
+const images = ['icons/right_arrow_icon.png', 'icons/left_arrow_icon.png'];
+let currentImageIndex = 0;
+
+scrollButtonLeft.addEventListener("click", async () => {
+  sidebarLeft.classList.toggle("hide-left")
+  scrollButtonLeft.classList.toggle("hide-left-button")
+
+  currentImageIndex = (currentImageIndex + 1) % images.length;
+  slideImgLeft.src = images[currentImageIndex];
+})
+
+const scrollButtonRight = document.querySelector(".right-slide-button");
+let sidebarRight = document.querySelector(".sidebur-right");
+let slideImgRight = document.querySelector(".right-slide-img")
+
+scrollButtonRight.addEventListener("click", async () => {
+  sidebarRight.classList.toggle("hide-right")
+  scrollButtonRight.classList.toggle("hide-right-button")
+
+})
+
+// console.log(slideImgRight);
