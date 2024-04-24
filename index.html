@@ -30,43 +30,31 @@
     <div class="left-add-part">for add</div>
   </section>
 
-  <section class="sidebur-right hide-right">
+  <section class="sidebur-right">
     <button class="right-slide-button"><img class="right-slide-img" src="icons/right_settings_icon.png"
         alt="slide"><span>PLAY LIST</span></button>
 
     <ul class="right-ul">
-      <button class="add-new-song"><input class="input-new-song" type="file"><img class="arrow-up-icon" src="icons/folder_arrow_up_icon.png" alt="folder"></button>
+      <input class="input-new-song add-new-song" type="file"><img class="arrow-up-icon"
+        src="icons/folder_arrow_up_icon.png" alt="folder">
+
       <li class="right-li">
-        <audio class="right-audio" controls>
+        <audio-player class="right-audio" title="Alter - Bad Advace bad advice" src="../audio/Alter - Bad Advace.mp3" bar-width="5"
+          bar-gap="2" preload>
           <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
+          <source src="audio/Let_Me_Down.mp3" type="audio/wav">
           Your browser does not support the audio element.
-        </audio>
-      </li>
-      <li class="right-li">
-        <audio class="right-audio" controls>
-          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </li>
-      <li class="right-li">
-        <audio class="right-audio" controls>
-          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </li>
-      <li class="right-li">
-        <audio class="right-audio" controls>
-          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
-      </li>
-      <li class="right-li">
-        <audio class="right-audio" controls>
-          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio>
+        </audio-player>
       </li>
 
+      <li class="right-li">
+        <audio-player class="right-audio" title="Alter - Bad Advace" src="../audio/Alter - Bad Advace.mp3" bar-width="5"
+          bar-gap="2" preload>
+          <source src="audio/Let_Me_Down.mp3" type="audio/mpeg">
+          <source src="audio/Let_Me_Down.mp3" type="audio/wav">
+          Your browser does not support the audio element.
+        </audio-player>
+      </li>
     </ul>
     <div class="right-add-part">for add</div>
   </section>
@@ -129,9 +117,9 @@
     <div class="bottom-bar"></div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script> -->
   <script src="app.js"></script>
-  <script src="test.js"></script>
+  <script src="audio-player.js"></script>
 </body>
 
 </html>

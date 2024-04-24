@@ -1,3 +1,4 @@
+
 const mainInput = document.querySelector(".main-input");
 const inputWidth = mainInput.offsetWidth;
 const fontSize = parseInt(window.getComputedStyle(mainInput).fontSize);
@@ -10,9 +11,10 @@ let mainTextPart = document.querySelector(".main-text-part");
 let backInput = document.querySelector(".back-input");
 
 
-const audio = document.getElementById("audio");
+const audio = document.querySelector(".right-audio");
 const bars = document.querySelectorAll(".bar");
 const startButton = document.querySelector(".start-button");
+
 
 let i = 0;
 let index = 0;
@@ -194,35 +196,35 @@ startButton.addEventListener("click", async () => {
 
     });
 
-  audio.playbackRate = 1; // important thing for speed
+  // audio.playbackRate = 1; // important thing for speed
 
-  audio.play().then(() => {
-    const audioContext = new (window.AudioContext ||
-      window.webkitAudioContext)();
-    const source = audioContext.createMediaElementSource(audio);
-    const analyser = audioContext.createAnalyser();
-    source.connect(analyser);
-    analyser.connect(audioContext.destination);
+  // audio.play().then(() => {
+  //   const audioContext = new (window.AudioContext ||
+  //     window.webkitAudioContext)();
+  //   const source = audioContext.createMediaElementSource(audio);
+  //   const analyser = audioContext.createAnalyser();
+  //   source.connect(analyser);
+  //   analyser.connect(audioContext.destination);
 
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
+  //   const bufferLength = analyser.frequencyBinCount;
+  //   const dataArray = new Uint8Array(bufferLength);
 
-    function updateBars() {
-      requestAnimationFrame(updateBars);
-      analyser.getByteFrequencyData(dataArray);
-      bars.forEach((bar, index) => {
-        const frequency = dataArray[index];
-        const barProcent = (frequency / 255) * 100;
-        const barHeight = 100 - Math.round(barProcent) + "%";
-        bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 20%, yellow 30%, rgb(3, 255, 3) 80%)`;
-        // bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 10%, rgb(213, 19, 252) 20%, rgb(255, 47, 168) 30%, rgb(3, 104, 255) 80%)`;
-      });
-    }
+  //   function updateBars() {
+  //     requestAnimationFrame(updateBars);
+  //     analyser.getByteFrequencyData(dataArray);
+  //     bars.forEach((bar, index) => {
+  //       const frequency = dataArray[index];
+  //       const barProcent = (frequency / 255) * 100;
+  //       const barHeight = 100 - Math.round(barProcent) + "%";
+  //       bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 20%, yellow 30%, rgb(3, 255, 3) 80%)`;
+  //       // bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 10%, rgb(213, 19, 252) 20%, rgb(255, 47, 168) 30%, rgb(3, 104, 255) 80%)`;
+  //     });
+  //   }
 
-    updateBars();
+  //   updateBars();
 
 
-  });
+  // });
   // .catch((error) => console.error("Error playing audio:", error));
 
 
@@ -257,3 +259,4 @@ scrollButtonRight.addEventListener("click", async () => {
 })
 
 // console.log(slideImgRight);
+
