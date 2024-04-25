@@ -1,262 +1,210 @@
 
-const mainInput = document.querySelector(".main-input");
-const inputWidth = mainInput.offsetWidth;
-const fontSize = parseInt(window.getComputedStyle(mainInput).fontSize);
+{
 
-const inputLength = Math.floor(inputWidth / (fontSize * 0.6));
+  class GamePlayAnimation {
+    constructor() {
+      this.mainInput = document.querySelector(".main-input");
+      this.inputWidth = this.mainInput.offsetWidth;
+      this.fontSize = parseInt(window.getComputedStyle(this.mainInput).fontSize);
+      this.inputLength = Math.floor(this.inputWidth / (this.fontSize * 0.6));
+      this.bitsPart = document.querySelector(".play-bits");
+      this.mainTextPart = document.querySelector(".main-text-part");
+      this.backInput = document.querySelector(".back-input");
+      this.startButton = document.querySelector(".start-button");
 
-let bitsPart = document.querySelector(".play-bits");
+      console.log(this.shadowRoot);
 
-let mainTextPart = document.querySelector(".main-text-part");
-let backInput = document.querySelector(".back-input");
+      this.i = 0;
+      this.index = 0;
+      this.newLetter = 0;
+      this.gameStart = 0;
+      this.timeOut = 0;
+      this.rightScore = 0;
+      this.falseScore = 0;
 
+      // 1 part 
 
-const audio = document.querySelector(".right-audio");
-const bars = document.querySelectorAll(".bar");
-const startButton = document.querySelector(".start-button");
+      this.scrollButtonLeft = document.querySelector(".left-slide-button");
+      this.sidebarLeft = document.querySelector(".sidebar-left");
+      this.slideImgLeft = document.querySelector(".left-slide-img");
+      this.images = ['icons/right_arrow_icon.png', 'icons/left_arrow_icon.png'];
+      this.currentImageIndex = 0;
 
+      this.scrollButtonRight = document.querySelector(".right-slide-button");
+      this.sidebarRight = document.querySelector(".sidebur-right");
+      this.slideImgRight = document.querySelector(".right-slide-img")
+    }
 
-let i = 0;
-let index = 0;
-let newLetter = 0;
-let gameStart = 0;
-let timeOut = 0;
-
-startButton.addEventListener("click", async () => {
-
-
-
-  async function mainFunction(content) {
-
-    startButton.style.display = 'none';
-    mainInput.value = '';
-    backInput.innerText = '';
-    mainInput.focus();
-
-    let rightScore = 0;
-    let falseScore = 0;
-
-    for (let cont of content) {
-      let delayCont = Math.floor((cont["start"] - timeOut) * 1000);
-      await delay(delayCont);
-      timeOut = cont["end"];
-
-      // await delay(2000)
-
-      function splitTextByNumber(text, number) {
-        let words = text.split(" ");
-        let result = [];
-        let currentLine = "";
-
-        for (let i = 0; i < words.length; i++) {
-          if ((currentLine + words[i]).length <= number) {
-            currentLine += words[i] + " ";
-          } else {
-            result.push(currentLine);
-            currentLine = words[i] + " ";
-          }
-        }
-
-        if (currentLine) {
+    splitTextByNumber(text, number) {
+      let words = text.split(" ");
+      let result = [];
+      let currentLine = "";
+      for (let i = 0; i < words.length; i++) {
+        if ((currentLine + words[i]).length <= number) {
+          currentLine += words[i] + " ";
+        } else {
           result.push(currentLine);
+          currentLine = words[i] + " ";
         }
-
-        return result;
       }
+      if (currentLine) {
+        result.push(currentLine);
+      }
+      return result;
+    }
 
-      async function mainSpellCheck(inputValue, contText) {
+    async mainSpellCheck(inputValue, contText) {
+      let compareResult = 0;
+      for (let i = 0; i < inputValue.length; i++) {
+        if (inputValue[i] === contText[i]) {
+          compareResult++
+        }
+      }
+      this.rightScore = compareResult;
+      this.falseScore = contText.length - compareResult
+    }
 
-        let compareResult = 0;
+    async mainAnimationLetter(fullText, cont) {
 
-        for (let i = 0; i < inputValue.length; i++) {
-          if (inputValue[i] === contText[i]) {
-            compareResult++
+      let li = 0;
+
+      for (let endText of fullText) {
+
+        this.mainInput.maxLength = endText.length
+        endText = endText.trim();
+        this.resText = endText
+        let i = 0;
+        let countIter = 1;
+
+        this.backInput.innerHTML = '';
+        this.mainInput.value = '';
+
+        for (let animeLetter of endText) {
+
+          let timeLetter = Math.round(
+            ((cont["end"] - cont["start"]) * 1000) /
+            fullText.join(" ").length
+          );
+
+          await this.delay(timeLetter / 4);
+
+          this.newLetter = document.createElement("span");
+          let addClass = `main-text${li}`;
+          this.newLetter.classList.add("main-text", addClass);
+
+          this.backInput.style.textAlign = "start";
+          let splitLetter = document.createElement("span")
+          splitLetter.classList.add(`back-letter${i}`, "back-letters")
+          splitLetter.innerText = animeLetter;
+          this.backInput.appendChild(splitLetter)
+          if (animeLetter === ' ') {
+            this.newLetter.innerHTML = "&nbsp;";
+            this.mainTextPart.appendChild(this.newLetter);
+          } else {
+            this.newLetter.innerText = animeLetter
+            this.mainTextPart.appendChild(this.newLetter);
           }
+          this.newLetter.style.animationName = "animationText";
+          i++;
+          this.newLetter.style.marginLeft = `${countIter}px`
+          countIter += parseInt(window.getComputedStyle(this.newLetter).width)
         }
 
-        rightScore = compareResult;
-        falseScore = contText.length - compareResult
-      }
+        this.mainInput.addEventListener("input", async (lett) => {
 
+          let lastIndex = this.mainInput.value.length - 1;
+          let backLetter = document.querySelector(`.back-letter${lastIndex}`)
 
-      let splitText = splitTextByNumber(cont["text"], inputLength);
-      let resText;
-
-      async function mainAnimationLetter(fullText, cont) {
-
-        let li = 0;
-
-        for (let endText of fullText) {
-          mainInput.maxLength = endText.length
-          endText = endText.trim();
-          resText = endText
-          let i = 0;
-          let countIter = 1;
-          backInput.innerHTML = '';
-          mainInput.value = '';
-
-          for (let animeLetter of endText) {
-            let timeLetter = Math.round(
-              ((cont["end"] - cont["start"]) * 1000) /
-              fullText.join(" ").length
-            );
-
-            await delay(timeLetter / 4);
-            newLetter = document.createElement("span");
-            let addClass = `main-text${li}`;
-            newLetter.classList.add("main-text", addClass);
-            // newLetter.innerText = animeLetter
-            // mainTextPart.appendChild(newLetter)
-
-
-
-            backInput.style.textAlign = "start";
-            let splitLetter = document.createElement("span")
-            splitLetter.classList.add(`back-letter${i}`, "back-letters")
-            splitLetter.innerText = animeLetter;
-            backInput.appendChild(splitLetter)
-
-
-            // '&nbsp;'
-            if (animeLetter === ' ') {
-              newLetter.innerHTML = "&nbsp;";
-              mainTextPart.appendChild(newLetter);
-            } else {
-              newLetter.innerText = animeLetter
-              mainTextPart.appendChild(newLetter);
-            }
-
-            newLetter.style.animationName = "animationText";
-
-
-            i++;
-            newLetter.style.marginLeft = `${countIter}px`
-            countIter += parseInt(window.getComputedStyle(newLetter).width)
-
+          if (this.resText[lastIndex] === lett.data) {
+            backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(1, 255, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
+          } else if (this.resText[lastIndex] !== lett.data && lett.data !== null) {
+            backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(255, 1, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
           }
 
-          await delay(2000)
-          let elements = document.querySelectorAll(`.main-text${li}`);
-          elements.forEach(element => element.remove());
-          li++;
+          let backspaceLetter = document.querySelector(`.back-letter${lastIndex + 1}`)
 
-          mainSpellCheck(mainInput.value, endText)
-        }
+          if (lett.data === null) {
+            backspaceLetter.style.boxShadow = "none";
+          }
+        })
+
+        await this.delay(2000)
+        let elements = document.querySelectorAll(`.main-text${li}`);
+        elements.forEach(element => element.remove());
+        li++;
+        this.mainSpellCheck(this.mainInput.value, endText)
       }
+    }
 
-      mainInput.addEventListener("input", async (lett) => {
+    async mainFunction(content) {
+      this.startButton.style.display = 'none';
+      this.mainInput.value = '';
+      this.backInput.innerText = '';
+      this.mainInput.focus();
 
+      this.rightScore = 0;
+      this.falseScore = 0;
 
-        let lastIndex = mainInput.value.length - 1;
-        let backLetter = document.querySelector(`.back-letter${lastIndex}`)
+      for (let cont of content) {
 
-        if (resText[lastIndex] === lett.data) {
-          backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(1, 255, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
+        let delayCont = Math.floor((cont["start"] - this.timeOut) * 1000);
+        await this.delay(delayCont);
+        this.timeOut = cont["end"];
 
-        } else if (resText[lastIndex] !== lett.data && lett.data !== null) {
-          backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(255, 1, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
+        let splitText = this.splitTextByNumber(cont["text"], this.inputLength);
 
-        }
+        this.mainAnimationLetter(splitText, cont);
+        let middleForTime = Math.round((cont["end"] - cont["start"]) * 1000);
+        await this.delay(middleForTime);
 
-        let backspaceLetter = document.querySelector(`.back-letter${lastIndex + 1}`)
+      }
+      this.gameStart = 0;
+      this.backInput.innerText = "ENTER TO START!";
+      this.backInput.style.textAlign = "center";
+    }
 
-        if (lett.data === null) {
-          backspaceLetter.style.boxShadow = "none";
-        }
+    attachPlayEvents() {
+      this.startButton.addEventListener('click', () => {
+
+        console.log("tetss test");
+
+        this.content = fetch("Let_Me_Down.json")
+          .then((response) => response.json())
+          .then((data) => {
+            this.content = data;
+            this.segments = this.content["segments"];
+            this.mainFunction(this.segments)
+          })
+
+      })
+
+      this.scrollButtonLeft.addEventListener("click", async () => {
+        this.sidebarLeft.classList.toggle("hide-left")
+        this.scrollButtonLeft.classList.toggle("hide-left-button")
+
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+        this.slideImgLeft.src = this.images[this.currentImageIndex];
+      })
+
+      this.scrollButtonRight.addEventListener("click", async () => {
+        this.sidebarRight.classList.toggle("hide-right")
+        this.scrollButtonRight.classList.toggle("hide-right-button")
 
       })
 
 
-
-      mainAnimationLetter(splitText, cont);
-
-      let middleForTime = Math.round((cont["end"] - cont["start"]) * 1000);
-
-      await delay(middleForTime);
     }
 
-    gameStart = 0;
-    backInput.innerText = "ENTER TO START!";
-    backInput.style.textAlign = "center";
+    delay(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
   }
 
-  function delay(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+  let game = new GamePlayAnimation();
+  game.attachPlayEvents();
+
+}
 
 
-
-  let content = fetch("Let_Me_Down.json")
-    .then((response) => response.json())
-    .then((data) => {
-      content = data;
-      const segments = content["segments"];
-
-      mainFunction(segments);
-
-    });
-
-  // audio.playbackRate = 1; // important thing for speed
-
-  // audio.play().then(() => {
-  //   const audioContext = new (window.AudioContext ||
-  //     window.webkitAudioContext)();
-  //   const source = audioContext.createMediaElementSource(audio);
-  //   const analyser = audioContext.createAnalyser();
-  //   source.connect(analyser);
-  //   analyser.connect(audioContext.destination);
-
-  //   const bufferLength = analyser.frequencyBinCount;
-  //   const dataArray = new Uint8Array(bufferLength);
-
-  //   function updateBars() {
-  //     requestAnimationFrame(updateBars);
-  //     analyser.getByteFrequencyData(dataArray);
-  //     bars.forEach((bar, index) => {
-  //       const frequency = dataArray[index];
-  //       const barProcent = (frequency / 255) * 100;
-  //       const barHeight = 100 - Math.round(barProcent) + "%";
-  //       bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 20%, yellow 30%, rgb(3, 255, 3) 80%)`;
-  //       // bar.style.background = `linear-gradient(to bottom, transparent ${barHeight}, red 10%, rgb(213, 19, 252) 20%, rgb(255, 47, 168) 30%, rgb(3, 104, 255) 80%)`;
-  //     });
-  //   }
-
-  //   updateBars();
-
-
-  // });
-  // .catch((error) => console.error("Error playing audio:", error));
-
-
-});
-
-
-// sidebare
-
-const scrollButtonLeft = document.querySelector(".left-slide-button");
-let sidebarLeft = document.querySelector(".sidebar-left");
-let slideImgLeft = document.querySelector(".left-slide-img")
-
-const images = ['icons/right_arrow_icon.png', 'icons/left_arrow_icon.png'];
-let currentImageIndex = 0;
-
-scrollButtonLeft.addEventListener("click", async () => {
-  sidebarLeft.classList.toggle("hide-left")
-  scrollButtonLeft.classList.toggle("hide-left-button")
-
-  currentImageIndex = (currentImageIndex + 1) % images.length;
-  slideImgLeft.src = images[currentImageIndex];
-})
-
-const scrollButtonRight = document.querySelector(".right-slide-button");
-let sidebarRight = document.querySelector(".sidebur-right");
-let slideImgRight = document.querySelector(".right-slide-img")
-
-scrollButtonRight.addEventListener("click", async () => {
-  sidebarRight.classList.toggle("hide-right")
-  scrollButtonRight.classList.toggle("hide-right-button")
-
-})
-
-// console.log(slideImgRight);
 
