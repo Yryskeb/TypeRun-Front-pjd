@@ -1,6 +1,5 @@
 
 {
-
   class GamePlayAnimation {
     constructor() {
       this.mainInput = document.querySelector(".main-input");
@@ -11,8 +10,8 @@
       this.mainTextPart = document.querySelector(".main-text-part");
       this.backInput = document.querySelector(".back-input");
       this.startButton = document.querySelector(".start-button");
+      this.addNewSong = document.querySelector(".add-new-song")
 
-      console.log(this.shadowRoot);
 
       this.i = 0;
       this.index = 0;
@@ -79,6 +78,22 @@
         this.backInput.innerHTML = '';
         this.mainInput.value = '';
 
+        this.mainInput.addEventListener("input", async (lett) => {
+
+          let lastIndex = this.mainInput.value.length - 1;
+          let backLetter = document.querySelector(`.back-letter${lastIndex}`)
+
+          if (this.resText[lastIndex] === lett.data) {
+            backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(1, 255, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
+          } else if (lett.data !== null) {
+            backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(255, 1, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
+          } else {
+            let lastIndex = this.mainInput.value.length;
+            let backLetter = document.querySelector(`.back-letter${lastIndex}`)
+            backLetter.style.boxShadow = "none"
+          }
+        })
+
         for (let animeLetter of endText) {
 
           let timeLetter = Math.round(
@@ -110,23 +125,7 @@
           countIter += parseInt(window.getComputedStyle(this.newLetter).width)
         }
 
-        this.mainInput.addEventListener("input", async (lett) => {
 
-          let lastIndex = this.mainInput.value.length - 1;
-          let backLetter = document.querySelector(`.back-letter${lastIndex}`)
-
-          if (this.resText[lastIndex] === lett.data) {
-            backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(1, 255, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
-          } else if (this.resText[lastIndex] !== lett.data && lett.data !== null) {
-            backLetter.style.boxShadow = "0px 12px 0px -2px rgb(255, 255, 255), 0px 24px 2px -2px rgb(255, 1, 1), 0px 24px 1px -1px rgb(0, 0, 0)"
-          }
-
-          let backspaceLetter = document.querySelector(`.back-letter${lastIndex + 1}`)
-
-          if (lett.data === null) {
-            backspaceLetter.style.boxShadow = "none";
-          }
-        })
 
         await this.delay(2000)
         let elements = document.querySelectorAll(`.main-text${li}`);
@@ -166,8 +165,6 @@
     attachPlayEvents() {
       this.startButton.addEventListener('click', () => {
 
-        console.log("tetss test");
-
         this.content = fetch("Let_Me_Down.json")
           .then((response) => response.json())
           .then((data) => {
@@ -192,6 +189,10 @@
 
       })
 
+      this.addNewSong.addEventListener("click", () => {
+        console.log("test");
+        document.querySelector(".add-new-song-form").classList.toggle("hide-song-form")
+      })
 
     }
 
@@ -206,5 +207,69 @@
 
 }
 
+{
+  class LoadContent {
+    constructor() {
+      this.addNewSongForm = document.querySelector(".add-new-song-form")
+      this.textLine = document.querySelector(".right-block-text")
+    }
 
+    attachLoadEvents() {
+      document.addEventListener('DOMContentLoaded', () => {
+
+        this.addNewSongForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+
+          const songName = this.addNewSongForm.querySelector('.new-song-name').value;
+          const songFile = this.addNewSongForm.querySelector('.new-song').files[0];
+
+          const formData = new FormData();
+          formData.append('title', songName);
+          formData.append('audio', songFile);
+
+          let response = await fetch('http://127.0.0.1:8000/api/account/login/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: 'admin', password: '1' })
+          })
+
+          const data = await response.json()
+
+          let responseLoad = await fetch('http://127.0.0.1:8000/api/audio/', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${data.access}`
+            },
+            body: formData
+          })
+            .then(response => response.text())
+            .then(data => {
+              console.log(data);
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        });
+
+        this.textLine.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          
+          const songText = this.textLine.querySelector("#block-text").value;
+          const songTextStart = this.textLine.querySelector("#text-time-start").value;
+          const songTextEnd = this.textLine.querySelector("#text-time-end").value;
+
+          console.log(songText, songTextStart, songTextEnd);
+
+        })
+
+      });
+
+    }
+  }
+
+  let load = new LoadContent();
+  load.attachLoadEvents();
+}
 

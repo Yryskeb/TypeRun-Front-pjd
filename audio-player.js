@@ -182,12 +182,24 @@
         this.updateFrequency();
       }, false);
 
+      this.settingButton.addEventListener("click", () => {
+        document.querySelector(".right-audio-text").classList.toggle("audio-text-hide")
+      })
+
       this.audioPlay.addEventListener("click", () => {
         document.querySelector(".sidebur-right").classList.toggle("hide-right")
         document.querySelector(".right-slide-button").classList.toggle("hide-right-button")
 
         this.gamePlay();
+        document.querySelector(".start-button").click()
       })
+
+      // this.startButton = document.querySelector(".start-button");
+
+      // this.startButton.addEventListener("click", () => {
+      //   this.gamePlay();
+      //   console.log("test test");
+      // })
     }
 
     async togglePlay() {
@@ -202,11 +214,33 @@
       return this.audio.play();
     }
 
-    gamePlay() {
+    async gamePlay() {
 
-      this.audio.currentTime = 0;
+      let response = await fetch('http://127.0.0.1:8000/api/account/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: 'admin', password: '1' })
+      })
 
-      this.audio.play().then(() => {
+      const data = await response.json()
+
+      let getAudio = await fetch("http://127.0.0.1:8000/api/audio/", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${data.access}`
+        }
+      })
+
+      getAudio = await getAudio.json()
+      console.log(getAudio);
+      console.log(getAudio[1]);
+
+      this.audioToPlay = new Audio(getAudio[1].audio);
+
+      this.audioToPlay.play().then(() => {
         const audioContext = this.audioCtx
         const source = this.track
         const analyser = this.analyserNode
@@ -229,7 +263,6 @@
         }
 
         updateBars();
-
 
       });
     }
@@ -491,6 +524,7 @@
             transform: translateY(-50%);
             opacity: 0.4;
         }
+
       </style>
     `
     }
@@ -515,9 +549,11 @@
           </div>
           <button class="right-button-settings"></button>
         </figure>
+
         
       `;
 
+      this.settingButton = this.shadowRoot.querySelector(".right-button-settings")
       this.audioPlay = this.shadowRoot.querySelector(".right-play-button")
       this.audio = this.shadowRoot.querySelector('audio');
       this.playPauseBtn = this.shadowRoot.querySelector('.play-btn');
