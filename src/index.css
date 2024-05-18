@@ -1,0 +1,30 @@
+* {
+  /* border: 1px solid black; */
+  /* opacity: 0.8; */
+  margin: 0px;
+  padding: 0px;
+  font-family: "Anta", sans-serif;
+}
+
+html {
+  min-width: 670px;
+}
+
+body {
+  min-width: 670px;
+  background-color: rgb(46, 51, 51);
+}
+
+#root {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  border-color: #fff;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  min-width: 670px;
+  background: url(back_inage.jpg) no-repeat center fixed;
+  background-size: cover;
+  background-color: rgb(46, 51, 51);
+}

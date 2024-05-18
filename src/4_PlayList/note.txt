@@ -1,0 +1,50 @@
+// export default function PlayList() {
+
+//     function HideRightSidebur() {
+//         document.querySelector(".right-slide-button").classList.toggle("hide-right-button")
+//         document.querySelector(".sidebur-right").classList.toggle("hide-right")
+//     }
+
+//     return ( 
+//         <section className="sidebur-right hide-right">
+//             <button className="right-slide-button" onClick={HideRightSidebur}>
+//                 <img className="right-slide-img" src={SettingsIcon} alt="slide" />
+//                 <span>PLAY LIST</span>
+//             </button>
+
+//             <ul className="right-ul">
+//                 <button className="add-new-song">
+//                     <img className="arrow-up-icon" src={ArrowIcon} alt="folder" />
+//                 </button>
+
+//                 <form className="add-new-song-form hide-song-form" action="audio-player.js" method="post">
+//                     <label htmlFor="song-name" className="song-name">Song Name</label>
+//                     <input className="new-song-name" type="text" name="song-name" required />
+//                     <label htmlFor="song">Upload Song</label>
+//                     <input className="new-song" type="file" name="song" accept="audio/*" required />
+//                     <button className="add-new-song-button" type="submit">Add</button>
+//                 </form>
+
+//                 <div className="right-audio-text audio-text-hide">
+//                     <p>Let me down slowly</p>
+//                     <form className="right-block-text" action="audio-player.js" method="post">
+//                         <div className="text-line">
+//                             <input type="time" id="text-time-start" step="1" autoComplete="off" spellCheck="false" />
+//                             <input type="text" id="block-text" autoComplete="off" spellCheck="false" />
+//                             <input type="time" id="text-time-end" step="1" autoComplete="off" spellCheck="false" />
+//                         </div>
+//                         <div className="text-line">
+//                             <input type="time" id="text-time-start" step="1" autoComplete="off" spellCheck="false" />
+//                             <input type="text" id="block-text" autoComplete="off" spellCheck="false" />
+//                             <input type="time" id="text-time-end" step="1" autoComplete="off" spellCheck="false" />
+//                         </div>
+//                         <button className="add-text-button" type="submit">SAVE</button>
+//                     </form>
+//                 </div>
+
+//                 <AudioPlay />
+//             </ul>
+//             <div className="right-add-part">for add</div>
+//         </section>
+//     )
+// }

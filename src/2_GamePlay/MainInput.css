@@ -1,0 +1,134 @@
+.main-text-part {
+    display: flex;
+    padding-left: 12px;
+    box-sizing: border-box;
+    align-items: flex-start;
+    width: 95%;
+    height: 400px;
+    min-width: 635px;
+}
+
+.main-text {
+    font-size: 26px;
+    padding-left: 0.37px;
+    border: none;
+    font-family: 'Anta', sans-serif;
+    transition: linear;
+    color: aqua;
+    animation-duration: 2000ms;
+    animation-fill-mode: forwards;
+    box-sizing: border-box;
+    position: absolute;
+    margin-top: 406px;
+    overflow: hidden;
+}
+
+
+@keyframes animationText {
+    0% {
+        margin-top: -50px;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    90% {
+        margin-top: 380px;
+        opacity: 0.5;
+    }
+
+    100% {
+        margin-top: 406px;
+        opacity: 0;
+    }
+
+}
+
+
+
+.main-part-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    min-width: 670px;
+    background-color: black;
+    opacity: 0.7;
+    border: 1px solid black;
+    border-radius: 0px 0px 25px 25px;
+    box-shadow: 0px 30px 0px;
+
+}
+
+
+
+.section-main-input {
+    width: 95%;
+    height: 45px;
+    min-width: 630px;
+    position: relative;
+}
+
+
+.main-input {
+    display: inline-block;
+    position: absolute;
+    box-sizing: content-box;
+    width: 100%;
+    height: 100%;
+    font-size: 26px;
+    text-indent: 12px;
+    min-width: 630px;
+    background: linear-gradient(to bottom, transparent 20%, black);
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 2px 2px black, 0 0 10px rgb(167, 255, 4), 0 0 5px rgb(255, 255, 255);
+    border: 1px solid aqua;
+    border-top: none;
+    border-radius: 0px 0px 15px 15px;
+    outline: none;
+}
+
+
+
+.back-input {
+    position: absolute;
+    box-sizing: border-box;
+    align-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    min-width: 630px;
+    font-size: 26px;
+    padding-left: 12px;
+    color: #fff;
+    border-radius: 0px 0px 10px 10px;
+
+}
+
+.start-button {
+    display: inline-block;
+    position: absolute;
+    margin: 200px;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #004074;
+    border: none;
+    border-radius: 30px;
+    transition: 300ms;
+    width: 200px;
+}
+
+
+.start-button:hover {
+    background-color: #00aeff
+}
+
+.start-button:active {
+    transform: scale(0.95);
+}

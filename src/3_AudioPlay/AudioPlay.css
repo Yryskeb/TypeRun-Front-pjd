@@ -1,0 +1,242 @@
+:host {
+    width: 100%;
+    max-width: 400px;
+    font-family: sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.right-li {
+    list-style: none;
+    width: 100%;
+    height: 50px;
+    min-width: 380px;
+    min-height: 50px;
+    border: 1px solid white;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    position: absolute;
+}
+
+.right-audio {
+    display: flex;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.audio-player {
+    display: flex;
+    background: #111;
+    border-radius: 5px;
+    color: #fff;
+    align-items: center;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.audio-name {
+    position: absolute;
+    color: #fff;
+    font-size: 12px;
+    width: 50%;
+    font-family: "Anta", sans-serif;
+    z-index: 2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: 500;
+    top: 0;
+    left: 84px;
+    background: transparent;
+    margin: 0;
+    border-radius: 3px;
+    font-size: 15px;
+}
+
+.play-btn {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    background: url("/audio-player-icon-sprite.png") 0 center/500% 100% no-repeat;
+    appearance: none;
+    border: none;
+    text-indent: -999999px;
+    overflow: hidden;
+}
+
+.play-btn.playing {
+    background: url("/audio-player-icon-sprite.png") 25% center/500% 100% no-repeat;
+}
+
+.right-play-button {
+    align-self: center;
+    height: 38px;
+    font-family: "Anta", sans-serif;
+    font-weight: 800;
+    margin-right: 5px;
+    border-radius: 10px;
+    border: 2px solid white;
+    padding: 0px 3px;
+}
+
+.right-play-button:hover {
+    color: white;
+    border: 2px solid white;
+    background-color: transparent;
+}
+
+.right-button-settings {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    background: url("/drafts_filled_icon.svg") 100% center/90% 80% no-repeat;
+    border: none;
+    padding: none;
+    overflow: hidden;
+    appearance: none;
+    filter: invert(100%);
+}
+
+.right-button-settings:active {
+    transform: scale(0.9);
+}
+
+.volume-bar {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    background: url("/audio-player-icon-sprite.png") 50% center/500% 100% no-repeat;
+    position: relative;
+}
+
+.volume-bar.half {
+    background: url("/audio-player-icon-sprite.png") 75% center/500% 100% no-repeat;
+}
+
+.volume-bar.over {
+    background: url("/audio-player-icon-sprite.png") 100% center/500% 100% no-repeat;
+}
+
+.volume-field {
+    display: none;
+    position: absolute;
+    appearance: none;
+    height: 20px;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    z-index: 5;
+    margin: 0;
+    border-radius: 15px;
+    background: #ffffff;
+}
+
+.volume-field::-webkit-slider-thumb {
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    background: hsl(207, 100%, 49%);
+    border-radius: 50%;
+}
+
+.volume-field::-moz-range-thumb {
+    appearance: none;
+    height: 20px;
+    width: 10px;
+    background: #6d78ff
+}
+
+.volume-field::-ms-thumb {
+    appearance: none;
+    height: 20px;
+    width: 10px;
+    background: #6d78ff
+}
+
+.volume-bar:hover .volume-field {
+    display: block;
+}
+
+.progress-indicator {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    flex: 1;
+    font-size: 12px;
+    align-items: center;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    flex: 1;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 2;
+    transform: translateY(-50%);
+    width: 100%;
+    appearance: none;
+    margin: 0;
+    overflow: hidden;
+    background: none;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    appearance: none;
+    height: 20px;
+    width: 0;
+    box-shadow: -300px 0 0 300px #ffffff38;
+
+}
+
+.progress-bar::-moz-range-thumb {
+    appearance: none;
+    height: 20px;
+    width: 0;
+    box-shadow: -300px 0 0 300px #ffffff21;
+}
+
+.progress-bar::-ms-thumb {
+    appearance: none;
+    height: 20px;
+    width: 0;
+    box-shadow: -300px 0 0 300px #ffffff21;
+}
+
+.duration,
+.current-time {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 2px #111;
+}
+
+.duration {
+    margin-left: 2px;
+    margin-right: 5px;
+}
+
+.duration::before {
+    content: '/';
+    display: inline-block;
+    margin-right: 2px;
+}
+
+canvas {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    opacity: 0.4;
+}

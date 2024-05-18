@@ -1,0 +1,44 @@
+.part-result {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 670px;
+}
+
+.play-bits {
+    width: 80%;
+    height: 50%;
+    overflow: hidden;
+    min-width: 670px;
+    min-height: 160px;
+    z-index: 1;
+    position: relative;
+    bottom: -40%;
+    background-color: rgba(31, 22, 25, 0.4);
+    box-shadow: 0px 0px 25px 25px black;
+    border-radius: 35px 35px 0px 0px;
+}
+
+.bottom-bar {
+    height: 30%;
+    width: 75%;
+    background-image: radial-gradient(transparent 40%, white 60%);
+    border-radius: 50%;
+    overflow: hidden;
+    bottom: -25%;
+    position: relative;
+    z-index: 2;
+    min-width: 690px;
+    min-height: 100px;
+}
+
+.main-visual-bar {
+    height: 100%;
+    width: 100%;
+    border: 1px solid black;
+    padding: 10px, 5px, 0px, 5px;
+
+}
