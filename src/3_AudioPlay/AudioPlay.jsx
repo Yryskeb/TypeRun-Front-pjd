@@ -1,5 +1,6 @@
 import "./AudioPlay.css";
-import React, { useState, useEffect, useRef, Component } from 'react';
+import React, { Component } from 'react';
+
 
 
 export default class AudioPlay extends Component {
@@ -127,8 +128,6 @@ export default class AudioPlay extends Component {
 
     this.audioPlay.addEventListener("click", () => {
       document.querySelector(".right-slide-button").click();
-
-      this.gamePlay();
       document.querySelector(".start-button").click();
     });
   }
