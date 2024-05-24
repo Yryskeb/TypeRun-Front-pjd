@@ -103,7 +103,6 @@ export default function Frequency(props) {
 
     return (
         <div className="part-result">
-            {/* <button className="right-play-button" onClick={handlePlayButtonClick}>PLAY</button> */}
             <audio ref={audioRef} preload="metadata" style={{ display: 'none' }}>
                 <source src={props.song} type="audio/mpeg" />
                 <source src={props.song} type="audio/wav" />
